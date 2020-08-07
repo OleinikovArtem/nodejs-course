@@ -12,7 +12,7 @@ const products = []
  */
 
 router.get('/add-product', (req, res) => {
-  res.render('add-product', { docTitle: 'Add product' })
+  res.render('add-product', { docTitle: 'Add product', path: '/admin/add-product' })
 })
 
 router.post('/add-product', (req, res) => {

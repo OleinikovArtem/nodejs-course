@@ -8,6 +8,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Open Sans', sans-serif;
+  max-width: 100%;
 }
 
 main {
@@ -83,13 +84,20 @@ main {
 }
 
 .card__actions {
-    padding: 1rem;
-    text-align: center;
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .card__actions button,
 .card__actions a {
-    margin: 0 0.25rem;
+  display: block;
+  padding: 2px 8px;
+  margin: 0 0.25rem;
+}
+.card__actions a {
+  text-decoration: none;
 }
 
 .btn {
@@ -105,4 +113,9 @@ main {
 .btn:active {
   background-color: #00695c;
   color: white;
+}
+
+img {
+  display: block;
+  width: 100%;
 }

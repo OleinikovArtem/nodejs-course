@@ -7,17 +7,21 @@ const productsFile = path.join(
   'products.json'
 )
 
-const getProductsFromFile = (callback) => {
+const getProductsFromFile = (callback = () => {}) => {
   fs.readFile(productsFile, (err, fileContent) => {
-    if (err) callback([])
+    if (err) {
+      return callback([])
+    }
     callback(JSON.parse(fileContent))
   })
 }
 
-
 module.exports = class Product {
-  constructor(title) {
+  constructor(title, imgUrl, description, price) {
     this.title = title
+    this.imgUrl = imgUrl
+    this.description = description
+    this.price = price
   }
 
   static fetchAll(callBack = () => { }) {

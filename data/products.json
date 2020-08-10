@@ -1,1 +1,14 @@
-[{"title":"Area Chart Example"},{"title":"Time series, zoomable"},{"title":"Area Chart Example"}]
+[
+  {
+    "title": "test title",
+    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg",
+    "description": "test description",
+    "price": "5.99"
+  },
+  {
+    "title": "Test 2",
+    "imgUrl": "https://i.pinimg.com/originals/09/ca/f4/09caf421d0abae97ccc690eb8c95ff24.jpg",
+    "description": "Test description test 2",
+    "price": "10.00"
+  }
+]

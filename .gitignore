@@ -6,3 +6,4 @@ yarn-lock.json
 
 .vscode/
 .idea/
+config.js

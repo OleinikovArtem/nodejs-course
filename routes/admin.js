@@ -1,8 +1,11 @@
 const express = require('express')
-
-const { getAddProducts, postAddProducts, getProducts } = require('../controllers/admin')
-
 const router = express.Router()
+
+const {
+  getAddProducts,
+  postAddProducts,
+  getProducts
+} = require('../controllers/admin')
 
 // /admin/... => GET
 router.get('/add-product', getAddProducts)

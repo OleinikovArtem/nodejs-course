@@ -8,6 +8,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Open Sans', sans-serif;
+  max-width: 100%;
 }
 
 main {
@@ -112,4 +113,9 @@ main {
 .btn:active {
   background-color: #00695c;
   color: white;
+}
+
+img {
+  display: block;
+  width: 100%;
 }

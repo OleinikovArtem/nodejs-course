@@ -6,7 +6,8 @@ const {
   getAddProducts,
   getEditProducts,
   postAddProducts,
-  postEditProducts
+  postEditProducts,
+  postDeleteProduct
 } = require('../controllers/admin')
 
 // /admin/... => GET
@@ -17,6 +18,6 @@ router.get('/products', getProducts)
 // /admin/... => POST
 router.post('/add-product', postAddProducts)
 router.post('/edit-product', postEditProducts)
-
+router.post('/deleted-product', postDeleteProduct)
 
 module.exports = router

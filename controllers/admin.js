@@ -37,14 +37,20 @@ exports.getEditProducts = (req, res, next) => {
 // POST
 exports.postAddProducts = (req, res, next) => {
   const { title, imgUrl, description, price } = req.body
-  const product = new Product({title, imgUrl, description, price})
+  const product = new Product({ title, imgUrl, description, price })
   product.save()
-  res.redirect('/')
+  res.redirect('products')
 }
 
 exports.postEditProducts = (req, res, next) => {
   const { id = null, title, imgUrl, description, price } = req.body
-  const product = new Product({id, title, imgUrl, description, price})
+  const product = new Product({ id, title, imgUrl, description, price })
   product.save()
-  res.redirect('/')
+  res.redirect('products')
+}
+
+exports.postDeleteProduct = (req, res, next) => {
+  const { id } = req.body
+  Product.deleteById(id)
+  res.redirect('products')
 }

@@ -4,7 +4,7 @@ const router = express.Router()
 const {
   getProducts,
   getAddProducts,
-  getEditProducts,
+  getEditProduct,
   postAddProducts,
   postEditProducts,
   postDeleteProduct
@@ -12,7 +12,7 @@ const {
 
 // /admin/... => GET
 router.get('/add-product', getAddProducts)
-router.get('/edit-product/:id', getEditProducts)
+router.get('/edit-product/:id', getEditProduct)
 router.get('/products', getProducts)
 
 // /admin/... => POST

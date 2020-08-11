@@ -21,7 +21,7 @@ exports.getAddProducts = (req, res, next) => {
   })
 }
 
-exports.getEditProducts = (req, res, next) => {
+exports.getEditProduct = (req, res, next) => {
   const { id } = req.params
   Product.findById(id, product => {
     if (!product) return res.redirect('/admin/products')

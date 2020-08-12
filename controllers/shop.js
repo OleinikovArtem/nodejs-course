@@ -1,66 +1,84 @@
-const Cart = require('../models/Cart')
-const Product = require('../models/Product')
-
-// Products
-exports.getIndex = (req, res, next) => {
-  Product.fetchAll(products => {
-    res.render('shop/index', {
-      path: '/',
-      pageTitle: 'Shop',
-      prods: products,
-    })
-  })
-}
+const Product = require('../models/product');
+const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {
   Product.fetchAll(products => {
     res.render('shop/product-list', {
-      path: '/products',
-      pageTitle: 'All Products',
       prods: products,
-    })
-  })
-}
+      pageTitle: 'All Products',
+      path: '/products'
+    });
+  });
+};
 
 exports.getProduct = (req, res, next) => {
-  const { id } = req.params
-  Product.findById(id, prod => {
+  const prodId = req.params.productId;
+  Product.findById(prodId, product => {
     res.render('shop/product-detail', {
-      path: '/product',
-      pageTitle: 'Product: ' + prod.title,
-      prod: prod,
-    })
-  })
-}
+      product: product,
+      pageTitle: product.title,
+      path: '/products'
+    });
+  });
+};
 
-// Cart
+exports.getIndex = (req, res, next) => {
+  Product.fetchAll(products => {
+    res.render('shop/index', {
+      prods: products,
+      pageTitle: 'Shop',
+      path: '/'
+    });
+  });
+};
+
 exports.getCart = (req, res, next) => {
-  res.render('shop/cart', {
-    path: '/cart',
-    pageTitle: 'Cart',
-  })
-}
+  Cart.getCart(cart => {
+    Product.fetchAll(products => {
+      const cartProducts = [];
+      for (product of products) {
+        const cartProductData = cart.products.find(
+          prod => prod.id === product.id
+        );
+        if (cartProductData) {
+          cartProducts.push({ productData: product, qty: cartProductData.qty });
+        }
+      }
+      res.render('shop/cart', {
+        path: '/cart',
+        pageTitle: 'Your Cart',
+        products: cartProducts
+      });
+    });
+  });
+};
 
 exports.postCart = (req, res, next) => {
-  const { id } = req.body
-  Product.findById(id, prod => {
-    Cart.addProduct(id, prod.price)
-  })
-  res.redirect('/cart')
-}
+  const prodId = req.body.productId;
+  Product.findById(prodId, product => {
+    Cart.addProduct(prodId, product.price);
+  });
+  res.redirect('/cart');
+};
 
-// Order
+exports.postCartDeleteProduct = (req, res, next) => {
+  const prodId = req.body.productId;
+  Product.findById(prodId, product => {
+    Cart.deleteProduct(prodId, product.price);
+    res.redirect('/cart');
+  });
+};
+
 exports.getOrders = (req, res, next) => {
   res.render('shop/orders', {
     path: '/orders',
-    pageTitle: 'Orders',
-  })
-}
+    pageTitle: 'Your Orders'
+  });
+};
 
-// Checkout
 exports.getCheckout = (req, res, next) => {
   res.render('shop/checkout', {
     path: '/checkout',
-    pageTitle: 'Checkout',
-  })
-}
+    pageTitle: 'Checkout'
+  });
+};

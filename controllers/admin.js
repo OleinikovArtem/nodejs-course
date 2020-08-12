@@ -1,56 +1,71 @@
-const Product = require('../models/Product')
+const Product = require('../models/product');
 
-// GET
+exports.getAddProduct = (req, res, next) => {
+  res.render('admin/edit-product', {
+    pageTitle: 'Add Product',
+    path: '/admin/add-product',
+    editing: false
+  });
+};
+
+exports.postAddProduct = (req, res, next) => {
+  const title = req.body.title;
+  const imageUrl = req.body.imageUrl;
+  const price = req.body.price;
+  const description = req.body.description;
+  const product = new Product(null, title, imageUrl, description, price);
+  product.save();
+  res.redirect('/');
+};
+
+exports.getEditProduct = (req, res, next) => {
+  const editMode = req.query.edit;
+  if (!editMode) {
+    return res.redirect('/');
+  }
+  const prodId = req.params.productId;
+  Product.findById(prodId, product => {
+    if (!product) {
+      return res.redirect('/');
+    }
+    res.render('admin/edit-product', {
+      pageTitle: 'Edit Product',
+      path: '/admin/edit-product',
+      editing: editMode,
+      product: product
+    });
+  });
+};
+
+exports.postEditProduct = (req, res, next) => {
+  const prodId = req.body.productId;
+  const updatedTitle = req.body.title;
+  const updatedPrice = req.body.price;
+  const updatedImageUrl = req.body.imageUrl;
+  const updatedDesc = req.body.description;
+  const updatedProduct = new Product(
+    prodId,
+    updatedTitle,
+    updatedImageUrl,
+    updatedDesc,
+    updatedPrice
+  );
+  updatedProduct.save();
+  res.redirect('/admin/products');
+};
 
 exports.getProducts = (req, res, next) => {
   Product.fetchAll(products => {
     res.render('admin/products', {
-      path: '/admin/products',
-      pageTitle: 'Admin Products',
       prods: products,
-    })
-  })
-}
-
-exports.getAddProducts = (req, res, next) => {
-  res.render('admin/edit-product', {
-    pageTitle: 'Add Product',
-    path: '/admin/add-product',
-    editing: false,
-    product: null
-  })
-}
-
-exports.getEditProduct = (req, res, next) => {
-  const { id } = req.params
-  Product.findById(id, product => {
-    if (!product) return res.redirect('/admin/products')
-    res.render('admin/edit-product', {
-      pageTitle: 'Edit Product',
-      path: '/admin/edit-product',
-      editing: true,
-      product,
-    })
-  })
-}
-
-// POST
-exports.postAddProducts = (req, res, next) => {
-  const { title, imgUrl, description, price } = req.body
-  const product = new Product({ title, imgUrl, description, price })
-  product.save()
-  res.redirect('products')
-}
-
-exports.postEditProducts = (req, res, next) => {
-  const { id = null, title, imgUrl, description, price } = req.body
-  const product = new Product({ id, title, imgUrl, description, price })
-  product.save()
-  res.redirect('products')
-}
+      pageTitle: 'Admin Products',
+      path: '/admin/products'
+    });
+  });
+};
 
 exports.postDeleteProduct = (req, res, next) => {
-  const { id } = req.body
-  Product.deleteById(id)
-  res.redirect('products')
-}
+  const prodId = req.body.productId;
+  Product.deleteById(prodId);
+  res.redirect('/admin/products');
+};
